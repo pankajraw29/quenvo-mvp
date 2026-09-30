@@ -1,4 +1,4 @@
-"""QueueFlow API."""
+"""Quenvo API."""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from slowapi import _rate_limit_exceeded_handler
@@ -9,7 +9,7 @@ from .routers import auth, public, queues
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="QueueFlow API", version="1.0.0")
+    app = FastAPI(title="Quenvo API", version="1.0.0")
     app.state.limiter = limiter
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
     app.add_middleware(

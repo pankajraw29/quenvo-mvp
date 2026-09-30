@@ -9,7 +9,7 @@ export default function Landing() {
             End the line. <span className="accent">Keep the customers.</span>
           </h1>
           <p className="hero-sub">
-            QueueFlow is a smart queue manager for clinics, salons, cafes and
+            Quenvo is a smart queue manager for clinics, salons, cafes and
             service counters. Customers scan a QR code, see their live position,
             and get called exactly when it is their turn — no crowding, no
             confusion.

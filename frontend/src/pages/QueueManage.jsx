@@ -84,7 +84,7 @@ export default function QueueManage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `queueflow-${queue.code}-qr.svg`;
+    a.download = `quenvo-${queue.code}-qr.svg`;
     document.body.appendChild(a);
     a.click();
     a.remove();

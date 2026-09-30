@@ -58,7 +58,7 @@ export default function Login() {
           </button>
         </form>
         <p className="muted center">
-          New to QueueFlow? <Link to="/register">Create an account</Link>
+          New to Quenvo? <Link to="/register">Create an account</Link>
         </p>
       </div>
     </div>

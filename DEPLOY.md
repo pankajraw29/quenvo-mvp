@@ -1,4 +1,4 @@
-# Deploying QueueFlow for free
+# Deploying Quenvo for free
 
 Total cost: ₹0. Three services:
 
@@ -13,7 +13,7 @@ Total cost: ₹0. Three services:
 
 ## 0. Push the code to GitHub
 
-Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` folders.
+Create a repo (e.g. `quenvo-mvp`) and push both `backend/` and `frontend/` folders.
 
 ## 1. Database — MongoDB Atlas
 
@@ -24,7 +24,7 @@ Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` fo
 4. Connect → Drivers → copy the connection string. It looks like:
    `mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/`
    Replace `<user>` / `<password>` with your database user. Append the db name:
-   `...mongodb.net/queueflow`
+   `...mongodb.net/quenvo`
 
 ## 2. Backend — Render
 
@@ -36,9 +36,9 @@ Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` fo
    - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 4. **Environment variables:**
    - `MONGO_URL` = your Atlas connection string from step 1
-   - `DB_NAME` = `queueflow`
+   - `DB_NAME` = `quenvo`
    - `JWT_SECRET` = a long random string (generate: `openssl rand -hex 32`)
-5. Deploy. When it's live, note your URL, e.g. `https://queueflow-api.onrender.com`.
+5. Deploy. When it's live, note your URL, e.g. `https://quenvo-api.onrender.com`.
 6. Test: open `https://<your-api>/api/health` → should show `{"ok":true}`.
 
 ## 3. Frontend — Vercel
@@ -48,8 +48,8 @@ Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` fo
 3. Settings:
    - **Root Directory:** `frontend`
    - **Environment variable:** `VITE_API_URL` = your Render URL, e.g.
-     `https://queueflow-api.onrender.com` (no trailing slash)
-4. Deploy. You get a public URL like `https://queueflow-mvp.vercel.app`.
+     `https://quenvo-api.onrender.com` (no trailing slash)
+4. Deploy. You get a public URL like `https://quenvo-mvp.vercel.app`.
 
 ## 4. Try it end to end
 

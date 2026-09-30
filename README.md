@@ -1,4 +1,4 @@
-# QueueFlow
+# Quenvo
 
 A queue-management web app: businesses create queues, customers join via a QR code or link, see their live position, and get called when it's their turn.
 
@@ -17,7 +17,7 @@ A queue-management web app: businesses create queues, customers join via a QR co
 ## Project layout
 
 ```
-queueflow/
+quenvo/
 ├── backend/        # FastAPI API (see backend/README below)
 │   └── app/
 │       ├── main.py

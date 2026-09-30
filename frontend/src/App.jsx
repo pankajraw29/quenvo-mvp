@@ -25,7 +25,7 @@ function Header() {
   return (
     <header className="site-header">
       <Link to="/" className="brand">
-        <span className="brand-mark">Q</span> QueueFlow
+        <span className="brand-mark">Q</span> Quenvo
       </Link>
       <nav className="site-nav">
         {authed ? (
@@ -84,7 +84,7 @@ export default function App() {
         </Routes>
       </main>
       <footer className="site-footer">
-        <p>QueueFlow — smart queues for modern businesses.</p>
+        <p>Quenvo — smart queues for modern businesses.</p>
       </footer>
     </div>
   );

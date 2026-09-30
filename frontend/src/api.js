@@ -1,4 +1,4 @@
-// QueueFlow API client. Base URL comes from VITE_API_URL (see .env.example).
+// Quenvo API client. Base URL comes from VITE_API_URL (see .env.example).
 const BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export function getToken() {
