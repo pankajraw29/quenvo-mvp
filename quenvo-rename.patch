@@ -1,0 +1,203 @@
+diff --git a/DEPLOY.md b/DEPLOY.md
+index 86acc4e..d94f49a 100644
+--- a/DEPLOY.md
++++ b/DEPLOY.md
+@@ -1,4 +1,4 @@
+-# Deploying QueueFlow for free
++# Deploying Quenvo for free
+ 
+ Total cost: ₹0. Three services:
+ 
+@@ -13,7 +13,7 @@ Total cost: ₹0. Three services:
+ 
+ ## 0. Push the code to GitHub
+ 
+-Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` folders.
++Create a repo (e.g. `quenvo-mvp`) and push both `backend/` and `frontend/` folders.
+ 
+ ## 1. Database — MongoDB Atlas
+ 
+@@ -24,7 +24,7 @@ Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` fo
+ 4. Connect → Drivers → copy the connection string. It looks like:
+    `mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/`
+    Replace `<user>` / `<password>` with your database user. Append the db name:
+-   `...mongodb.net/queueflow`
++   `...mongodb.net/quenvo`
+ 
+ ## 2. Backend — Render
+ 
+@@ -36,9 +36,9 @@ Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` fo
+    - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+ 4. **Environment variables:**
+    - `MONGO_URL` = your Atlas connection string from step 1
+-   - `DB_NAME` = `queueflow`
++   - `DB_NAME` = `quenvo`
+    - `JWT_SECRET` = a long random string (generate: `openssl rand -hex 32`)
+-5. Deploy. When it's live, note your URL, e.g. `https://queueflow-api.onrender.com`.
++5. Deploy. When it's live, note your URL, e.g. `https://quenvo-api.onrender.com`.
+ 6. Test: open `https://<your-api>/api/health` → should show `{"ok":true}`.
+ 
+ ## 3. Frontend — Vercel
+@@ -48,8 +48,8 @@ Create a repo (e.g. `queueflow-mvp`) and push both `backend/` and `frontend/` fo
+ 3. Settings:
+    - **Root Directory:** `frontend`
+    - **Environment variable:** `VITE_API_URL` = your Render URL, e.g.
+-     `https://queueflow-api.onrender.com` (no trailing slash)
+-4. Deploy. You get a public URL like `https://queueflow-mvp.vercel.app`.
++     `https://quenvo-api.onrender.com` (no trailing slash)
++4. Deploy. You get a public URL like `https://quenvo-mvp.vercel.app`.
+ 
+ ## 4. Try it end to end
+ 
+diff --git a/README.md b/README.md
+index c1d1d90..99b1cf4 100644
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,4 @@
+-# QueueFlow
++# Quenvo
+ 
+ A queue-management web app: businesses create queues, customers join via a QR code or link, see their live position, and get called when it's their turn.
+ 
+@@ -17,7 +17,7 @@ A queue-management web app: businesses create queues, customers join via a QR co
+ ## Project layout
+ 
+ ```
+-queueflow/
++quenvo/
+ ├── backend/        # FastAPI API (see backend/README below)
+ │   └── app/
+ │       ├── main.py
+diff --git a/backend/app/main.py b/backend/app/main.py
+index 15d4567..e81f6f6 100644
+--- a/backend/app/main.py
++++ b/backend/app/main.py
+@@ -1,4 +1,4 @@
+-"""QueueFlow API."""
++"""Quenvo API."""
+ from fastapi import FastAPI
+ from fastapi.middleware.cors import CORSMiddleware
+ from slowapi import _rate_limit_exceeded_handler
+@@ -9,7 +9,7 @@ from .routers import auth, public, queues
+ 
+ 
+ def create_app() -> FastAPI:
+-    app = FastAPI(title="QueueFlow API", version="1.0.0")
++    app = FastAPI(title="Quenvo API", version="1.0.0")
+     app.state.limiter = limiter
+     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+     app.add_middleware(
+diff --git a/frontend/.env.example b/frontend/.env.example
+index e6ab325..419eb37 100644
+--- a/frontend/.env.example
++++ b/frontend/.env.example
+@@ -1,4 +1,4 @@
+-# Base URL of the QueueFlow backend API (no trailing slash).
++# Base URL of the Quenvo backend API (no trailing slash).
+ # Local development:
+ VITE_API_URL=http://localhost:8000
+ # Production example:
+diff --git a/frontend/index.html b/frontend/index.html
+index e14dafb..982b8af 100644
+--- a/frontend/index.html
++++ b/frontend/index.html
+@@ -4,8 +4,8 @@
+     <meta charset="UTF-8" />
+     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+-    <meta name="description" content="QueueFlow — smart queue management for clinics, salons and service counters." />
+-    <title>QueueFlow — Smart Queue Management</title>
++    <meta name="description" content="Quenvo — smart queue management for clinics, salons and service counters." />
++    <title>Quenvo — Smart Queue Management</title>
+   </head>
+   <body>
+     <div id="root"></div>
+diff --git a/frontend/src/App.jsx b/frontend/src/App.jsx
+index c0a6721..15a113c 100644
+--- a/frontend/src/App.jsx
++++ b/frontend/src/App.jsx
+@@ -25,7 +25,7 @@ function Header() {
+   return (
+     <header className="site-header">
+       <Link to="/" className="brand">
+-        <span className="brand-mark">Q</span> QueueFlow
++        <span className="brand-mark">Q</span> Quenvo
+       </Link>
+       <nav className="site-nav">
+         {authed ? (
+@@ -84,7 +84,7 @@ export default function App() {
+         </Routes>
+       </main>
+       <footer className="site-footer">
+-        <p>QueueFlow — smart queues for modern businesses.</p>
++        <p>Quenvo — smart queues for modern businesses.</p>
+       </footer>
+     </div>
+   );
+diff --git a/frontend/src/api.js b/frontend/src/api.js
+index aac2e7d..14f3440 100644
+--- a/frontend/src/api.js
++++ b/frontend/src/api.js
+@@ -1,4 +1,4 @@
+-// QueueFlow API client. Base URL comes from VITE_API_URL (see .env.example).
++// Quenvo API client. Base URL comes from VITE_API_URL (see .env.example).
+ const BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+ 
+ export function getToken() {
+diff --git a/frontend/src/pages/Landing.jsx b/frontend/src/pages/Landing.jsx
+index caee22b..6457dfc 100644
+--- a/frontend/src/pages/Landing.jsx
++++ b/frontend/src/pages/Landing.jsx
+@@ -9,7 +9,7 @@ export default function Landing() {
+             End the line. <span className="accent">Keep the customers.</span>
+           </h1>
+           <p className="hero-sub">
+-            QueueFlow is a smart queue manager for clinics, salons, cafes and
++            Quenvo is a smart queue manager for clinics, salons, cafes and
+             service counters. Customers scan a QR code, see their live position,
+             and get called exactly when it is their turn — no crowding, no
+             confusion.
+diff --git a/frontend/src/pages/Login.jsx b/frontend/src/pages/Login.jsx
+index 292c436..bd17237 100644
+--- a/frontend/src/pages/Login.jsx
++++ b/frontend/src/pages/Login.jsx
+@@ -58,7 +58,7 @@ export default function Login() {
+           </button>
+         </form>
+         <p className="muted center">
+-          New to QueueFlow? <Link to="/register">Create an account</Link>
++          New to Quenvo? <Link to="/register">Create an account</Link>
+         </p>
+       </div>
+     </div>
+diff --git a/frontend/src/pages/QueueManage.jsx b/frontend/src/pages/QueueManage.jsx
+index f84917e..5a59335 100644
+--- a/frontend/src/pages/QueueManage.jsx
++++ b/frontend/src/pages/QueueManage.jsx
+@@ -84,7 +84,7 @@ export default function QueueManage() {
+     const url = URL.createObjectURL(blob);
+     const a = document.createElement("a");
+     a.href = url;
+-    a.download = `queueflow-${queue.code}-qr.svg`;
++    a.download = `quenvo-${queue.code}-qr.svg`;
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+diff --git a/frontend/src/styles.css b/frontend/src/styles.css
+index c4543d4..8eaa33a 100644
+--- a/frontend/src/styles.css
++++ b/frontend/src/styles.css
+@@ -1,4 +1,4 @@
+-/* QueueFlow — polished single stylesheet. Mobile-first, no frameworks. */
++/* Quenvo — polished single stylesheet. Mobile-first, no frameworks. */
+ 
+ :root {
+   --primary: #4f46e5;
+diff --git a/frontend/vercel.json b/frontend/vercel.json
+new file mode 100644
+index 0000000..b4904d8
+--- /dev/null
++++ b/frontend/vercel.json
+@@ -0,0 +1 @@
++{"rewrites":[{"destination":"/","source":"/(.*)"}]}
+\ No newline at end of file
